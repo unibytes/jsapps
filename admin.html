@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+</head>
+<body>
+    <!--Navigation bar-->
+    <div id="nav-placeholder"></div>
+    
+    <!-- form -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 mx-auto">
+                <form id = "qform">
+                    <div id="questionDiv" class="form-group">
+                        Question
+                        <textarea class="form-control" id="formGroupExampleInput" placeholder="Enter your question"> </textarea>
+                    </div>
+                    <div id="A" class="form-group">
+                        Answer A 
+                        <textarea class="form-control" id="answerA" placeholder="Enter your answer"></textarea>
+                    </div>
+                    <div id="B" class="form-group">
+                        Answer B
+                        <textarea class="form-control" id="answerB" placeholder="Enter your answer"></textarea>
+                    </div>
+                    <div id="C" class="form-group">
+                        Answer C
+                        <textarea class="form-control" id="answerC" placeholder="Enter your answer"></textarea>
+                    </div>
+                    <div id="D" class="form-group">
+                        Answer D
+                        <textarea class="form-control" id="answerD" placeholder="Enter your answer"></textarea>
+                    </div>
+            
+                    <div id="ansSelectdiv" class="form-group">
+                        What is the correct answer
+                        <select class="custom-select" id="ansSelect">
+                            <option selected value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                </form>
+                <div>
+                    <button type="submit" class="btn btn-success" id="addAnsBtn">Add One More Answer</button>
+                </div>
+                <br>
+                <div>
+                    <button type="button" class="btn btn-primary" id="pubBtn">Publish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <script src="Model.js"></script>
+    <script src="DynamicForm.js"></script>
+    <script>
+        const qform = new DynamicForm("qform")
+        qform.addAnswerBtnClickBind("addAnsBtn")
+        qform.publishButtonBind("pubBtn")
+    </script>
+</body>
+<script>
+    $(function () {
+        $("#nav-placeholder").load("nav.html");
+    });
+</script>
+</html>
