@@ -20,7 +20,7 @@
         crossorigin="anonymous"></script>
 
     <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -40,35 +40,12 @@
                     </div>
 
                     <!-- Possible Answers -->
-                    <div id="possibleAnswers">
- 
-                        <!-- <div id="A" class="form-group">
-                            Answer A
-                            <textarea class="form-control" id="answerA" placeholder="Enter your answer"></textarea>
-                        </div>
-                        <div id="B" class="form-group">
-                            Answer B
-                            <textarea class="form-control" id="answerB" placeholder="Enter your answer"></textarea>
-                        </div>
-                        <div id="C" class="form-group">
-                            Answer C
-                            <textarea class="form-control" id="answerC" placeholder="Enter your answer"></textarea>
-                        </div>
-                        <div id="D" class="form-group">
-                            Answer D
-                            <textarea class="form-control" id="answerD" placeholder="Enter your answer"></textarea>
-                        </div> -->
-                    </div>
+                    <div id="possibleAnswers"></div>
                     
                     <!-- Correct Answer -->
                     <div id="ansSelectdiv" class="form-group">
                         What is the correct answer
-                        <select class="custom-select" id="ansSelect">
-                            <!-- <option selected value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-                            <option value="D">D</option> -->
-                        </select>
+                        <select class="custom-select" id="ansSelect"></select>
                     </div>
                 </form>
                 <div>
@@ -99,17 +76,16 @@
             </div>
     </div>
 
- 
-
-
-
     <script src="Model.js"></script>
-    <script src="DynamicForm.js"></script>
+    <script src="DynamicAdmin.js"></script>
     <script>
-        const qform = new DynamicForm("qform")
-        qform.addAnswerBtnClickBind("addAnsBtn")
-        qform.publishButtonBind("pubBtn")
-    </script>
+        loadDataFromLocalStorage()
+        editBtnLocalStorageListerner()
+        deleteBtnLocalStorageListerner()
+        const admin = new DynamicAdmin("possibleAnswers")
+        admin.addAnswerBtnClickBind("addAnsBtn")
+        admin.publishButtonBind("pubBtn")
+     </script>
 </body>
 <script>
     $(function () {
