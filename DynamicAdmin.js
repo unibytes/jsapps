@@ -220,6 +220,14 @@ function deleteBtnLocalStorageListerner() {
         });
         localStorage.setItem('quizData', JSON.stringify(newQuizArray));
         displayDataFromLocalStorage()
+
+        // just an animation of success
+        const deleteOne = document.getElementById("deleteOne");
+        deleteOne.style.display = "block";
+        setTimeout(() => {
+            deleteOne.style.display = "none";
+        }, 2000);
+
         clearform()
         setUpdateButtonToPub()
     })
