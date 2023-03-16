@@ -1,8 +1,8 @@
 class QuizItem {
-    constructor(id, question, ansMap, correctAnsLetter) {
+    constructor(id, question, ansObj, correctAnsLetter) {
         this.id = id
         this.question = question 
-        this.ansMap = ansMap 
+        this.ansObj = ansObj 
         this.correctAnsLetter = correctAnsLetter
     }
 }

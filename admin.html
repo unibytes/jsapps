@@ -37,6 +37,7 @@
                     <div id="questionDiv" class="form-group">
                         Question
                         <textarea class="form-control" id="formGroupExampleInput" placeholder="Enter your question"></textarea>
+                        <input id="qid" type="hidden" class="form-control txt">
                     </div>
 
                     <!-- Possible Answers -->
@@ -52,7 +53,7 @@
                     <button type="submit" class="btn btn-success" id="addAnsBtn">Add One More Answer</button>
                 </div>
                 <br>
-                <div>
+                <div id="submit">
                     <button type="button" class="btn btn-primary" id="pubBtn">Publish</button>
                 </div>
             </div>
@@ -79,9 +80,9 @@
     <script src="Model.js"></script>
     <script src="DynamicAdmin.js"></script>
     <script>
-        loadDataFromLocalStorage()
-        editBtnLocalStorageListerner()
+        displayDataFromLocalStorage()
         deleteBtnLocalStorageListerner()
+        editBtnLocalStorageListerner()
         const admin = new DynamicAdmin("possibleAnswers")
         admin.addAnswerBtnClickBind("addAnsBtn")
         admin.publishButtonBind("pubBtn")
