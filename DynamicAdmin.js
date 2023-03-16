@@ -89,6 +89,27 @@ class DynamicAdmin {
             let localData = localStorage.getItem("quizData")
             if (localData) {
                 let quizArray = JSON.parse(localData)
+                // update
+                if ($("#qid").val() != "") {
+                    const qid =  $("#qid").val()
+                    for (let i = 0; i < quizArray.length; i++) {
+                        if (quizArray[i].id == qid) {
+                            quizArray[i] = newQuizItem
+                            break
+                        }
+                    }
+                    localStorage.setItem("quizData", JSON.stringify(quizArray))
+                    setUpdateButtonToPub()
+                    // reset and display
+                    clearform()
+                    displayDataFromLocalStorage()
+
+
+                    // Updated admination
+                    animate(document.getElementById("ok"))  
+                    return 
+                }  
+
                 // identical question 
                 for (let i = 0; i < quizArray.length; i++) {
                     if (quizArray[i].question == newQuizItem.question) {
@@ -96,36 +117,21 @@ class DynamicAdmin {
                         return 
                     }
                 }
-
-                // update
-                if ($("#qid").val() != "") {
-                    const qid =  $("#qid").val()
-                    for (let i = 0; i < quizArray.length; i++) {
-                        if (quizArray[i].id == qid) {
-                            quizArray[i] = newQuizItem
-                        }
-                        localStorage.setItem("quizData", JSON.stringify(quizArray))
-                        setUpdateButtonToPub()
-                    }
-                // add
-                } else {
-                    quizArray.push(newQuizItem) 
-                    localStorage.setItem("quizData", JSON.stringify(quizArray))
-                }
+                
+                // OR just add
+                quizArray.push(newQuizItem) 
+                localStorage.setItem("quizData", JSON.stringify(quizArray))
+                
             } else {
                 let quizArray = []
                 quizArray.push(newQuizItem)
                 localStorage.setItem("quizData", JSON.stringify(quizArray))
-            }
-             
+            } 
 
-            // just an animation of success
-            const plusOne = document.getElementById("plusOne");
-            plusOne.style.display = "block";
-            setTimeout(() => {
-            plusOne.style.display = "none";
-            }, 2000);
- 
+            // +1 animation
+            animate(document.getElementById("plusOne"))  
+
+            // reset and display
             clearform()
             displayDataFromLocalStorage()
         }.bind(this))
@@ -221,12 +227,8 @@ function deleteBtnLocalStorageListerner() {
         localStorage.setItem('quizData', JSON.stringify(newQuizArray));
         displayDataFromLocalStorage()
 
-        // just an animation of success
-        const deleteOne = document.getElementById("deleteOne");
-        deleteOne.style.display = "block";
-        setTimeout(() => {
-            deleteOne.style.display = "none";
-        }, 2000);
+        // just an animation of delete
+        animate(document.getElementById("deleteOne"))
 
         clearform()
         setUpdateButtonToPub()
@@ -265,10 +267,15 @@ function setPubButtonToUpdate(editBtn) {
     })
 }
 
-
-
 function setUpdateButtonToPub() {
     const pubBtn = document.getElementById("pubBtn")
     pubBtn.innerHTML = "Publish"
     pubBtn.className = "btn btn-primary"
+}
+
+function animate(component) {
+    component.style.display = "block";
+    setTimeout(() => {
+        component.style.display = "none";
+    }, 2000);
 }
