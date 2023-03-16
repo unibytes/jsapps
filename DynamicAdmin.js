@@ -75,7 +75,7 @@ class DynamicAdmin {
             // NewQuizItem
             const quizItemId = new Date() 
             let correctAnswer = document.getElementById("ansSelect").value
-            let question = document.getElementById("questionDiv").querySelector("textarea").value
+            let question = document.getElementById("questionDiv").querySelector("textarea").value.trimStart().trimEnd()
             let ansObj = {}
             for (let i = 0; i < this.possibleAnswerDiv.children.length; i++) {
                 var letter = String.fromCharCode(65 + i)
@@ -89,6 +89,14 @@ class DynamicAdmin {
             let localData = localStorage.getItem("quizData")
             if (localData) {
                 let quizArray = JSON.parse(localData)
+                // identical question 
+                for (let i = 0; i < quizArray.length; i++) {
+                    if (quizArray[i].question == newQuizItem.question) {
+                        alert("Same question existed!")
+                        return 
+                    }
+                }
+
                 // update
                 if ($("#qid").val() != "") {
                     const qid =  $("#qid").val()
@@ -109,6 +117,15 @@ class DynamicAdmin {
                 quizArray.push(newQuizItem)
                 localStorage.setItem("quizData", JSON.stringify(quizArray))
             }
+             
+
+            // just an animation of success
+            const plusOne = document.getElementById("plusOne");
+            plusOne.style.display = "block";
+            setTimeout(() => {
+            plusOne.style.display = "none";
+            }, 2000);
+ 
             clearform()
             displayDataFromLocalStorage()
         }.bind(this))
@@ -203,6 +220,14 @@ function deleteBtnLocalStorageListerner() {
         });
         localStorage.setItem('quizData', JSON.stringify(newQuizArray));
         displayDataFromLocalStorage()
+
+        // just an animation of success
+        const deleteOne = document.getElementById("deleteOne");
+        deleteOne.style.display = "block";
+        setTimeout(() => {
+            deleteOne.style.display = "none";
+        }, 2000);
+
         clearform()
         setUpdateButtonToPub()
     })

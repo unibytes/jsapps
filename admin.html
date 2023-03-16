@@ -22,6 +22,29 @@
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <style>
+        .plusOne {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            display: none;
+            z-index: 100;
+            color: lightskyblue;
+        }
+        .deleteOne {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            display: none;
+            z-index: 100;
+            color: red;
+        }
+    </style>
+
 </head>
 <body>
     <!--Navigation bar-->
@@ -55,7 +78,11 @@
                 <br>
                 <div id="submit">
                     <button type="button" class="btn btn-primary" id="pubBtn">Publish</button>
+                    <div id="plusOne" class="plusOne">+1</div>
+                    <div id="deleteOne" class="deleteOne">-1</div>
                 </div>
+                 
+                 
             </div>
         </div>
         
