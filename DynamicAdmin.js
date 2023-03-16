@@ -62,14 +62,13 @@ class DynamicAdmin {
     }
 
     
-   
+    // publish data into localstorage
     publishButtonBind(pubButtonId) {
         const pubBtn = document.getElementById(pubButtonId)
-            // validate form
         pubBtn.addEventListener("click", function(){
             // Validation Form -------------------------
             if (!isValidForm()) {
-                alert("Question Should Not Be Empty")
+                alert("Question Should Not Be Empty and should have at least 1 choice!")
                 return
             }
 
@@ -77,35 +76,65 @@ class DynamicAdmin {
             const quizItemId = new Date() 
             let correctAnswer = document.getElementById("ansSelect").value
             let question = document.getElementById("questionDiv").querySelector("textarea").value
-            // clear question
-            document.getElementById("questionDiv").querySelector("textarea").value = ""
-            let ansMap = {}
+            let ansObj = {}
             for (let i = 0; i < this.possibleAnswerDiv.children.length; i++) {
                 var letter = String.fromCharCode(65 + i)
-                ansMap[letter] = this.possibleAnswerDiv.children[i].querySelector("textarea").value
+                ansObj[letter] = this.possibleAnswerDiv.children[i].querySelector("textarea").value
                 // clear possible answer           
                 this.possibleAnswerDiv.children[i].querySelector("textarea").value = ""
             }
-            const newQuizItem = new QuizItem(quizItemId, question, ansMap, correctAnswer)
-
-            // Do Local Storage
+            const newQuizItem = new QuizItem(quizItemId, question, ansObj, correctAnswer)
+            
+            // Add into Local Storage
             let localData = localStorage.getItem("quizData")
             if (localData) {
                 let quizArray = JSON.parse(localData)
-                quizArray.push(newQuizItem) 
-                localStorage.setItem("quizData", JSON.stringify(quizArray))
+                // update
+                if ($("#qid").val() != "") {
+                    const qid =  $("#qid").val()
+                    for (let i = 0; i < quizArray.length; i++) {
+                        if (quizArray[i].id == qid) {
+                            quizArray[i] = newQuizItem
+                        }
+                        localStorage.setItem("quizData", JSON.stringify(quizArray))
+                        setUpdateButtonToPub()
+                    }
+                // add
+                } else {
+                    quizArray.push(newQuizItem) 
+                    localStorage.setItem("quizData", JSON.stringify(quizArray))
+                }
             } else {
                 let quizArray = []
                 quizArray.push(newQuizItem)
                 localStorage.setItem("quizData", JSON.stringify(quizArray))
             }
-            loadDataFromLocalStorage()
-            
+            clearform()
+            displayDataFromLocalStorage()
         }.bind(this))
-
     } 
+}
 
- 
+function clearform() {
+    // clear question
+    document.getElementById("questionDiv").querySelector("textarea").value = ""
+
+    // clear possible answer
+    const parent = document.getElementById("possibleAnswers");
+    while (parent.children.length > 0) {
+        parent.children[0].remove()
+    }
+
+    // remove all options 
+    let ansSelect = document.getElementById("ansSelect")
+    ansSelect.options.length = 0
+
+    // clear identifier
+    $("#qid").val("")
+
+
+    // clear cancel button if any
+    $("#cancelbtn").remove()
 }
 
 // we make sure
@@ -116,8 +145,8 @@ function isValidForm() {
 }
 
 
-// Dynamically load data
-function loadDataFromLocalStorage() {
+// Dynamically display data from local storage
+function displayDataFromLocalStorage() {
     let quizData = localStorage.getItem('quizData');
     if (quizData) {
         $("#tblData tbody").html("");
@@ -138,9 +167,29 @@ function loadDataFromLocalStorage() {
     }
 }
 
+
 function editBtnLocalStorageListerner() {
     $('#tblData').on('click', '.btn-edit', function () {
-        console.log("He")
+        clearform()
+        const id = $(this).parent().parent().find(".question").attr("uid")
+        let quizData = localStorage.getItem('quizData')
+        let quizArray = JSON.parse(quizData)
+        let targetQuizItem = null
+        for (let i = 0; i < quizArray.length; i++) {
+            if (quizArray[i].id === id) {
+                targetQuizItem = quizArray[i]
+                break
+            }
+        }
+        document.getElementById("questionDiv").querySelector("textarea").value = targetQuizItem.question
+        const addAnsBtn = document.getElementById("addAnsBtn");
+        for (const key in targetQuizItem.ansObj) {
+            addAnsBtn.click()
+            let ansDiv = document.getElementById(key)
+            ansDiv.querySelector("textarea").value = targetQuizItem.ansObj[key]
+        }
+        $("#qid").val(id)
+        setPubButtonToUpdate(this)
     })
 }
 
@@ -153,6 +202,48 @@ function deleteBtnLocalStorageListerner() {
             return quizItem.id !== id;
         });
         localStorage.setItem('quizData', JSON.stringify(newQuizArray));
-        loadDataFromLocalStorage()
+        displayDataFromLocalStorage()
+        clearform()
+        setUpdateButtonToPub()
     })
+}
+
+
+// utils ------
+function setPubButtonToUpdate(editBtn) {
+    // enbale all 
+    $(".btn-edit").prop("disabled", false);
+
+    // disable only current edit btn
+    let button = $(editBtn);
+    button.prop('disabled', true);
+
+    const pubBtn = document.getElementById("pubBtn")
+    pubBtn.innerHTML = "Update"
+    pubBtn.className = "btn btn-warning"
+
+    // add a field to cancel 
+    const cancelBtn = document.createElement("button")
+    cancelBtn.innerHTML = "Cancel"
+    cancelBtn.className = "btn btn-danger"
+    cancelBtn.id = "cancelbtn"
+
+    // add cancelBtn to div
+    const subdiv = document.getElementById("submit")
+    subdiv.appendChild(cancelBtn)
+
+    cancelBtn.addEventListener("click", function() {
+        setUpdateButtonToPub()
+        clearform()
+        // enable edit btn
+        button.prop('disabled', false);        
+    })
+}
+
+
+
+function setUpdateButtonToPub() {
+    const pubBtn = document.getElementById("pubBtn")
+    pubBtn.innerHTML = "Publish"
+    pubBtn.className = "btn btn-primary"
 }
