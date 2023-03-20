@@ -27,10 +27,12 @@
     <!--Navigation bar-->
     <div id="nav-placeholder"></div>
 
-    <!-- TODO -->
-    <!-- Create a div in proper position -->
-    <!-- Generate question and answer automatically using Javascript -->
+    <div id="quizList"></div>
 
+    <script src="DynamicIndex.js"></script>
+    <script>
+        const showpage = new DynamicIndex("quizList")
+    </script>
 </body>
 <script>
     $(function () {
