@@ -78,6 +78,7 @@ function getLocalQuizArray() {
 }
 
 function showNoQuizItemYet() {
+
     // Create a notification card element
     const notificationCard = document.createElement("div");
     const image = document.createElement("img");
@@ -92,7 +93,9 @@ function showNoQuizItemYet() {
     text.style.color = "#FF0000";
     text.style.fontFamily = "comic sans ms";
     notificationCard.appendChild(text);
-    // Append the notification card element to the document body
+   
+    const submitbtn = document.getElementById("quizsubmit")
+    submitbtn.style.display = 'none'
     document.body.appendChild(notificationCard);
 }
 
