@@ -1,9 +1,10 @@
-class DynamicIndex {
+class DynamicQuiz {
     constructor(id) {
         this.qustionListDiv = document.getElementById(id)
         loadQuizFromLocalStorage(this.qustionListDiv)
     }
 }
+
 
 function loadQuizFromLocalStorage(container) {
     let quizData = localStorage.getItem('quizData');
@@ -11,6 +12,9 @@ function loadQuizFromLocalStorage(container) {
         return
     }
     let quizArray = JSON.parse(quizData)
+    if (quizArray.length <= 0) {
+        return
+    }
     for (const quizItem of quizArray) {
         let quizDiv = document.createElement('div')
         quizDiv.className = "container mt-4"

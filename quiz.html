@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,16 +24,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
+
 <body>
     <!--Navigation bar-->
     <div id="nav-placeholder"></div>
-    <header>
-        <div class="container px-4 text-center">
-            <img src="img/header.png" class="img-fluid" style="width:800px;height:200;">
-            <p class="lead">Online Quiz Platform! Free & Support Flexible Answer Choices! </p>
-            <a class="btn btn-lg btn-info" href="#download">Get Started </a>
-        </div>
-    </header>
+
+    <div id="quizList"></div>
+
+    <script src="js/dynamic_quiz.js"></script>
+    <script>
+        const showpage = new DynamicQuiz("quizList")
+    </script>
 
 </body>
 <script>
@@ -40,4 +42,5 @@
         $("#nav-placeholder").load("nav.html");
     });
 </script>
+
 </html>
