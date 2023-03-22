@@ -28,12 +28,16 @@
 <body>
     <!--Navigation bar-->
     <div id="nav-placeholder"></div>
-
+    <div id="result" class="container mt-4"></div>
     <div id="quizList"></div>
+    <div id="submitdiv" class="container mt-4">
+        <button type="submit" id = "quizsubmit" class="btn btn-primary">Submit Quiz</button>
+    </div>
 
     <script src="js/dynamic_quiz.js"></script>
     <script>
         const showpage = new DynamicQuiz("quizList")
+        showpage.submitQuizListener("quizsubmit")
     </script>
 
 </body>
